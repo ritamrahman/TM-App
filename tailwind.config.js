@@ -6,6 +6,7 @@ module.exports = {
     extend: {},
     colors: {
       primary: "#FBFCFE",
+      offWhite: "#DDE1E4",
       purple: {
         400: "#c084fc",
         200: "#9333EA",
@@ -22,6 +23,7 @@ module.exports = {
       matBlack: {
         900: "#24484c",
       },
+      yellowGreen: "#1cbe8e",
     },
   },
   plugins: [],
