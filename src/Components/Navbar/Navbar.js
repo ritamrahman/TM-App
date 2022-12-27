@@ -78,7 +78,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
               </li>
               <li>
                 <button
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide  transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-black text-white dark:bg-gradient-to-r from-gs to-ge dark:text-primary "
+                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md  hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-purple-200 text-white dark:bg-yellowGreen text-primary dark:text-primary "
                   aria-label="Sign up"
                   title="Sign up"
                 >
@@ -135,7 +135,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
             </div>
             {isMenuOpen && (
               <div className="absolute top-0 left-0 w-full z-10">
-                <div className="p-5 bg-white dark:bg-matBlack-900 border rounded shadow-sm">
+                <div className="p-5 bg-primary dark:bg-matBlack-900 border rounded shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <a
@@ -144,7 +144,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                         title="Company"
                         className="inline-flex items-center"
                       >
-                        <span className="ml-2 text-xl font-bold tracking-wide text-gs dark:text-matBlack-900 dark:text-primary uppercase">
+                        <span className="ml-2 text-xl font-bold tracking-wide text-gs  dark:text-primary uppercase">
                           TM App
                         </span>
                       </a>
@@ -222,7 +222,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                         </li>
                         <li>
                           <button
-                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-black dark:bg-gradient-to-r from-gs to-ge dark:text-matBlack-900 dark:text-primary hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none"
+                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-200 dark:bg-yellowGreen dark:text-primary hover:bg-purple-400 focus:shadow-outline focus:outline-none"
                             aria-label="Sign up"
                             title="Sign up"
                           >
