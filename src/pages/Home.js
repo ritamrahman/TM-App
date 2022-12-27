@@ -50,15 +50,12 @@ const Home = () => {
 
           {/* input */}
           <div className="relative mx-1 lg:mx-20">
-            <label for="UserEmail" className="sr-only">
-              {" "}
-              Email{" "}
-            </label>
+            <label className="sr-only"> write your task </label>
 
             <input
-              type="email"
-              id="UserEmail"
-              placeholder="chad@rhcp.com"
+              type="text"
+              id="userText"
+              placeholder="write your task"
               className="w-full h-14 rounded-md border-gray-200 bg-offWhite dark:bg-primary px-10 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm"
             />
 

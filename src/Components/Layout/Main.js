@@ -32,7 +32,9 @@ const Main = () => {
     <div>
       <Navbar handleThemeSwitch={handleThemeSwitch} theme={theme} />
       {/* <div className="w-full pt-20 bg-white dark:bg-midnight"> */}
-      <Outlet />
+      <div className="bg-primary dark:bg-matBlack-900">
+        <Outlet />
+      </div>
     </div>
   );
 };

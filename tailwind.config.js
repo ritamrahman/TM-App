@@ -24,6 +24,8 @@ module.exports = {
         900: "#24484c",
       },
       yellowGreen: "#1cbe8e",
+      blackColor: "#000000",
+      redColor: "#dc2626",
     },
   },
   plugins: [],

@@ -46,7 +46,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
             </li>
             <li>
               <a
-                href="/my-task"
+                href="/my-tasks"
                 aria-label="Our product"
                 title="Our product"
                 className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
@@ -190,7 +190,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                       </li>
                       <li>
                         <a
-                          href="/my-task"
+                          href="/my-tasks"
                           aria-label="Our product"
                           title="Our product"
                           className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
