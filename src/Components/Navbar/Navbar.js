@@ -16,7 +16,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
             title="Company"
             className="inline-flex items-center"
           >
-            <span className="ml-2 text-xl font-bold tracking-wide text-matBlack-900 dark:text-primary uppercase text-gs dark:text-matBlack-900 dark:text-primary">
+            <span className="ml-2 text-xl font-bold tracking-wide text-matBlack-900 dark:text-primary uppercase text-gs ">
               TM App
             </span>
           </a>
@@ -78,7 +78,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
               </li>
               <li>
                 <button
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide  transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-black text-white dark:bg-gradient-to-r from-gs to-ge dark:text-matBlack-900 dark:text-primary"
+                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide  transition duration-200 rounded shadow-md bg-deep-purple-accent-400 hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-black text-white dark:bg-gradient-to-r from-gs to-ge dark:text-primary "
                   aria-label="Sign up"
                   title="Sign up"
                 >
