@@ -5,6 +5,9 @@ import Home from "../pages/Home";
 import Main from "../Components/Layout/Main";
 import AddTask from "../pages/AddTask";
 import MyTasks from "../pages/MyTasks";
+import CompletedTasks from "../pages/CompletedTasks";
+import Login from "../pages/Login";
+import SignUp from "../pages/SignUp";
 
 export const routes = createBrowserRouter([
   {
@@ -22,6 +25,18 @@ export const routes = createBrowserRouter([
       {
         path: "/my-tasks",
         element: <MyTasks />,
+      },
+      {
+        path: "/completed-tasks",
+        element: <CompletedTasks />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
       },
     ],
   },

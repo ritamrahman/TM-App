@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = ({ handleThemeSwitch, theme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,8 +11,8 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
       <div className="px-4 py-5 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
         <div className="relative flex items-center justify-between">
           {/* logo start */}
-          <a
-            href="/"
+          <NavLink
+            to="/"
             aria-label="Company"
             title="Company"
             className="inline-flex items-center"
@@ -19,7 +20,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
             <span className="ml-2 text-xl font-bold tracking-wide text-matBlack-900 dark:text-primary uppercase text-gs ">
               TM App
             </span>
-          </a>
+          </NavLink>
           {/* logo end */}
           {/* desktop menu start */}
           <ul className=" items-center hidden space-x-8 lg:flex">
@@ -35,46 +36,46 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
               )}
             </button>
             <li>
-              <a
-                href="/add-task"
+              <NavLink
+                to="/add-task"
                 aria-label="Our product"
                 title="Our product"
                 className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
               >
                 add task
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="/my-tasks"
+              <NavLink
+                to="/my-tasks"
                 aria-label="Our product"
                 title="Our product"
                 className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
               >
                 My Task
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="/completed-tasks"
+              <NavLink
+                to="/completed-tasks"
                 aria-label="Product pricing"
                 title="Product pricing"
                 className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
               >
                 Completed Tasks
-              </a>
+              </NavLink>
             </li>
 
             <>
               <li>
-                <a
-                  href="/login"
+                <NavLink
+                  to="/login"
                   aria-label="About us"
                   title="About us"
                   className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 "
                 >
                   Login
-                </a>
+                </NavLink>
               </li>
               <li>
                 <button
@@ -82,7 +83,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                   aria-label="Sign up"
                   title="Sign up"
                 >
-                  <a href="/signup">Sign up</a>
+                  <NavLink to="/signup">Sign up</NavLink>
                 </button>
               </li>
             </>
@@ -138,8 +139,8 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                 <div className="p-5 bg-primary dark:bg-matBlack-900 border rounded shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <div>
-                      <a
-                        href="/"
+                      <NavLink
+                        to="/"
                         aria-label="Company"
                         title="Company"
                         className="inline-flex items-center"
@@ -147,7 +148,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                         <span className="ml-2 text-xl font-bold tracking-wide text-gs  dark:text-primary uppercase">
                           TM App
                         </span>
-                      </a>
+                      </NavLink>
                     </div>
                     <div>
                       <button
@@ -179,46 +180,46 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                       </li>
 
                       <li>
-                        <a
-                          href="/add-task"
+                        <NavLink
+                          to="/add-task"
                           aria-label="Our product"
                           title="Our product"
                           className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
                         >
                           add task
-                        </a>
+                        </NavLink>
                       </li>
                       <li>
-                        <a
-                          href="/my-tasks"
+                        <NavLink
+                          to="/my-tasks"
                           aria-label="Our product"
                           title="Our product"
                           className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
                         >
                           My Task
-                        </a>
+                        </NavLink>
                       </li>
                       <li>
-                        <a
-                          href="/completed-tasks"
+                        <NavLink
+                          to="/completed-tasks"
                           aria-label="Product pricing"
                           title="Product pricing"
                           className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 capitalize"
                         >
                           Completed Tasks
-                        </a>
+                        </NavLink>
                       </li>
 
                       <>
                         <li>
-                          <a
-                            href="/login"
+                          <NavLink
+                            to="/login"
                             aria-label="About us"
                             title="About us"
                             className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-deep-purple-accent-400 capitalize"
                           >
                             login
-                          </a>
+                          </NavLink>
                         </li>
                         <li>
                           <button
@@ -226,7 +227,7 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                             aria-label="Sign up"
                             title="Sign up"
                           >
-                            <a href="/signup">Sign Up</a>
+                            <NavLink to="/signup">Sign Up</NavLink>
                           </button>
                         </li>
                       </>
