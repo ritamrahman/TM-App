@@ -4,9 +4,11 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
+import { api } from "../api/api";
+import axios from "axios";
 const SignUp = () => {
   const [error, setError] = useState("");
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -27,7 +29,9 @@ const SignUp = () => {
         setError("");
         form.reset();
         handleUpdateUserProfile(name);
+        saveUserInfo(user.displayName, user.email);
         toast.success("Registration successfully");
+        setLoading(false);
         user?.uid && navigate(from, { replace: true });
       })
       .catch((e) => {
@@ -55,11 +59,23 @@ const SignUp = () => {
     providerLogin(googleProvider)
       .then((result) => {
         const user = result.user;
+        saveUserInfo(user.displayName, user.email);
         console.log(user);
         user?.uid && toast.success("Login successful");
         user?.uid && navigate(from, { replace: true });
       })
       .catch((error) => console.error(error));
+  };
+
+  // saveUserInfo
+  const saveUserInfo = async (name, email) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    await axios.post(`${api}/user/${email}`, { name, email }, config);
   };
 
   return (
