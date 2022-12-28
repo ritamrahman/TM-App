@@ -1,10 +1,21 @@
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 export const Navbar = ({ handleThemeSwitch, theme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logOut, loading, setLoading } = useContext(AuthContext);
 
   // handleLogOut
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        user?.uid && toast.success("Logout successful");
+        setLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <div className="bg-white dark:bg-matBlack-900 F z-10 w-full">
@@ -67,40 +78,48 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
             </li>
 
             <>
-              <li>
-                <NavLink
-                  to="/login"
-                  aria-label="About us"
-                  title="About us"
-                  className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 "
-                >
-                  Login
-                </NavLink>
-              </li>
-              <li>
-                <button
-                  className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md  hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-purple-200 text-white dark:bg-yellowGreen text-primary dark:text-primary "
-                  aria-label="Sign up"
-                  title="Sign up"
-                >
-                  <NavLink to="/signup">Sign up</NavLink>
-                </button>
-              </li>
-            </>
-
-            <>
-              <li className="cursor-pointer">LogOut</li>
-              {/* avatar */}
-              <li className="avatar tooltip tooltip-bottom">
-                <div className="w-9 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 text-matBlack-900 dark:text-primary capitalize">
-                  <img
-                    src={
-                      "https://www.pngfind.com/pngs/m/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png"
-                    }
-                    alt=""
-                  />
-                </div>
-              </li>
+              {!loading && !user?.uid ? (
+                <>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      aria-label="About us"
+                      title="About us"
+                      className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-teal-accent-400 "
+                    >
+                      Login
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      className="inline-flex items-center justify-center h-12 px-6 font-medium tracking-wide transition duration-200 rounded shadow-md  hover:bg-deep-purple-accent-700 focus:shadow-outline focus:outline-none bg-purple-200 text-white dark:bg-yellowGreen text-primary dark:text-primary "
+                      aria-label="Sign up"
+                      title="Sign up"
+                    >
+                      <NavLink to="/signup">Sign up</NavLink>
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="cursor-pointer" onClick={handleLogOut}>
+                    LogOut
+                  </li>
+                  {/* avatar */}
+                  <li className="avatar tooltip tooltip-bottom">
+                    <div className="w-9 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 text-matBlack-900 dark:text-primary capitalize">
+                      <img
+                        src={
+                          user?.photoURL
+                            ? user.photoURL
+                            : "https://www.pngfind.com/pngs/m/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png"
+                        }
+                        alt=""
+                      />
+                    </div>
+                  </li>
+                </>
+              )}
             </>
           </ul>
           {/* desktop menu end */}
@@ -172,7 +191,9 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                         <div className="w-9 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                           <img
                             src={
-                              "https://www.pngfind.com/pngs/m/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png"
+                              user?.photoURL
+                                ? user.photoURL
+                                : "https://www.pngfind.com/pngs/m/5-52097_avatar-png-pic-vector-avatar-icon-png-transparent.png"
                             }
                             alt=""
                           />
@@ -210,29 +231,31 @@ export const Navbar = ({ handleThemeSwitch, theme }) => {
                         </NavLink>
                       </li>
 
-                      <>
-                        <li>
-                          <NavLink
-                            to="/login"
-                            aria-label="About us"
-                            title="About us"
-                            className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-deep-purple-accent-400 capitalize"
-                          >
-                            login
-                          </NavLink>
-                        </li>
-                        <li>
-                          <button
-                            className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-200 dark:bg-yellowGreen dark:text-primary hover:bg-purple-400 focus:shadow-outline focus:outline-none"
-                            aria-label="Sign up"
-                            title="Sign up"
-                          >
-                            <NavLink to="/signup">Sign Up</NavLink>
-                          </button>
-                        </li>
-                      </>
-
-                      <li className="cursor-pointer">LogOut</li>
+                      {!loading && !user?.uid ? (
+                        <>
+                          <li>
+                            <NavLink
+                              to="/login"
+                              aria-label="About us"
+                              title="About us"
+                              className="font-medium tracking-wide text-matBlack-900 dark:text-primary transition-colors duration-200 hover:text-deep-purple-accent-400 capitalize"
+                            >
+                              login
+                            </NavLink>
+                          </li>
+                          <li>
+                            <button
+                              className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-purple-200 dark:bg-yellowGreen dark:text-primary hover:bg-purple-400 focus:shadow-outline focus:outline-none"
+                              aria-label="Sign up"
+                              title="Sign up"
+                            >
+                              <NavLink to="/signup">Sign Up</NavLink>
+                            </button>
+                          </li>
+                        </>
+                      ) : (
+                        <li className="cursor-pointer">LogOut</li>
+                      )}
                     </ul>
                   </nav>
                 </div>

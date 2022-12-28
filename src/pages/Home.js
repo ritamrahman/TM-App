@@ -1,84 +1,201 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Loading from "../Components/Loading/Loading";
+import { AuthContext } from "../contexts/AuthProvider";
+import toast from "react-hot-toast";
+import Error from "../Components/Error/Error";
 
 const Home = () => {
-  return (
-    <div className="relative dark:bg-matBlack-900 py-10" id="home">
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
-      >
-        <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:bg-matBlack-900"></div>
-        <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:bg-matBlack-900"></div>
-      </div>
-      <div className="relative pt-10 ml-auto">
-        <div className="lg:w-2/3 text-center mx-auto">
-          <h1 className="text-matBlack-900 dark:text-primary font-bold text-5xl md:text-6xl xl:text-7xl capitalize lg:leading-10">
-            punctuality is the first key of{" "}
-            <span className="text-purple-200 dark:text-yellowGreen uppercase pt-2">
-              success.
-            </span>
-          </h1>
+  const { signIn, loading, setLoading } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [image, setImage] = useState("");
+  const [userText, setUserText] = useState("");
+  const [url, setUrl] = useState("");
 
-          {/* image field */}
-          <div className="max-w-xl mx-auto mt-10 mb-6">
-            <label className="flex justify-center w-full h-32 px-4 transition border-2 border-gray-300 dark:border-yellowGreen border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
-              <span className="flex items-center space-x-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6 text-gray-600 dark:text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-                <span className="font-medium text-gray-600 dark:text-primary">
-                  Drop files to Attach, or
-                  <span className="text-blue-600 underline dark:text-primary">
-                    browse
+  const uploadImage = (e) => {
+    setError("");
+    const i = e.target.files[0];
+    setImage(i);
+    console.log("image", i);
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "h6imtxf3");
+    data.append("cloud_name", "dhhybvtwz");
+
+    fetch("  https://api.cloudinary.com/v1_1/dhhybvtwz/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setUrl(data.url);
+        console.log(data.url);
+
+        data.url && toast.success("Image uploaded");
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  const uploadData = () => {
+    console.log(userText, url);
+    const user = {
+      userTasks: userText,
+      img: url,
+    };
+    localStorage.setItem("userData", JSON.stringify(user));
+    toast.success("data uploaded");
+    // clear filed
+    setUserText("");
+    setImage("");
+    setUrl("");
+    // const data = new FormData();
+    // data.append("file", image);
+    // data.append("upload_preset", "h6imtxf3");
+    // data.append("cloud_name", "dhhybvtwz");
+    // fetch("  https://api.cloudinary.com/v1_1/dhhybvtwz/image/upload", {
+    //   method: "post",
+    //   body: data,
+    // })
+    //   .then((resp) => resp.json())
+    //   .then((data) => {
+    //     setUrl(data.url);
+    //     toast.success("Image uploaded");
+    //     const user = {
+    //       userTasks: userText,
+    //       img: url,
+    //     };
+    //     console.log(user);
+    //     // save data to localStorage
+    //     localStorage.setItem("userData", JSON.stringify(user));
+    //     // clear filed
+    //     // setUserText("");
+    //     // setImage("");
+    //   })
+
+    //   .catch((err) => console.log(err));
+  };
+
+  // setTimeout(setError("Something wrong"), 5000);
+  setTimeout(function () {
+    setError("Something wrong");
+  }, "5000");
+
+  return loading === true ? (
+    <Loading />
+  ) : (
+    <>
+      <div className="relative dark:bg-matBlack-900 py-10" id="home">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20"
+        >
+          <div className="blur-[106px] h-56 bg-gradient-to-br from-primary to-purple-400 dark:bg-matBlack-900"></div>
+          <div className="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:bg-matBlack-900"></div>
+        </div>
+        <div className="relative pt-10 ml-auto">
+          <div className="lg:w-2/3 text-center mx-auto">
+            <h1 className="text-matBlack-900 dark:text-primary font-bold text-5xl md:text-6xl xl:text-7xl capitalize lg:leading-10">
+              punctuality is the first key of{" "}
+              <span className="text-purple-200 dark:text-yellowGreen uppercase pt-2">
+                success.
+              </span>
+            </h1>
+
+            {/* image field */}
+            <div className="max-w-xl mx-auto mt-10 mb-6">
+              <label className="flex justify-center w-full h-32 px-4 transition border-2 border-gray-300 dark:border-yellowGreen border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                <span className="flex items-center space-x-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6 text-gray-600 dark:text-primary"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                    />
+                  </svg>
+                  <span className="font-medium text-gray-600 dark:text-primary">
+                    Drop files to Attach, or
+                    <span className="text-blue-600 underline dark:text-primary">
+                      browse
+                    </span>
                   </span>
                 </span>
-              </span>
-              <input type="file" name="file_upload" className="hidden" />
-            </label>
-          </div>
+                <input
+                  type="file"
+                  // onChange={(e) => setImage(e.target.files[0])}
+                  onChange={uploadImage}
+                  name="file_upload"
+                  className="hidden"
+                />
+              </label>
+            </div>
+            {/* image preview */}
+            {image !== "" && (
+              <div className="text-start ">
+                {!url && error !== "" && (
+                  <Error msg="something wrong please select another image">
+                    {error}
+                  </Error>
+                )}
+                {!url ? (
+                  <span className="my-2 text-start bg-blackColor  text-primary py-2 px-3 rounded-lg ">
+                    uploading
+                  </span>
+                ) : (
+                  <span className=" bg-yellowGreen my-2  text-primary py-2 px-3 rounded-lg">
+                    uploaded
+                  </span>
+                )}
 
-          {/* input */}
-          <div className="relative mx-1 lg:mx-20">
-            <label className="sr-only"> write your task </label>
+                <img
+                  className="max-w-[200px] my-3 rounded-3xl"
+                  src={URL?.createObjectURL(image)}
+                  alt=""
+                />
+              </div>
+            )}
 
-            <input
-              type="text"
-              id="userText"
-              placeholder="write your task"
-              className="w-full h-14 rounded-md border-gray-200 bg-offWhite dark:bg-primary px-10 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm"
-            />
+            {/* input */}
+            <div className="relative mx-1 lg:mx-20">
+              <label className="sr-only"> write your task </label>
 
-            <span className="absolute inset-y-0 right-0 grid w-10 place-content-center">
-              <button
-                type="button"
-                className="rounded-full bg-purple-200 p-4 text-primary mr-4 text-white hover:bg-rose-700 dark:bg-yellowGreen dark:hover:bg-yellowGreen/75"
-              >
-                <span className="sr-only">Submit</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="h-4 w-4"
+              <input
+                type="text"
+                id="userText"
+                name="userText"
+                onChange={(e) => setUserText(e.target.value)}
+                placeholder="write your task"
+                className="w-full h-14 rounded-md border-gray-200 bg-offWhite dark:bg-primary px-10 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm"
+              />
+
+              <span className="absolute inset-y-0 right-0 grid w-10 place-content-center">
+                <button
+                  type="button"
+                  onClick={uploadData}
+                  className="rounded-full bg-purple-200 p-4 text-primary mr-4 text-white hover:bg-rose-700 dark:bg-yellowGreen dark:hover:bg-yellowGreen/75"
                 >
-                  <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-                </svg>
-              </button>
-            </span>
+                  <span className="sr-only">Submit</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-4 w-4"
+                  >
+                    <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                  </svg>
+                </button>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

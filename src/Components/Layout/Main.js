@@ -1,9 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Loading from "../Loading/Loading";
 import Navbar from "../Navbar/Navbar";
 
 const Main = () => {
   const [theme, setTheme] = useState(null);
+  const { loading } = useContext(AuthContext);
+
+  useEffect(() => {
+    loading && <Loading />;
+  }, [loading]);
 
   // check system theme preferences
   useEffect(() => {
