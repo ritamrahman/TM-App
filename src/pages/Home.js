@@ -38,11 +38,18 @@ const Home = () => {
 
   const uploadData = () => {
     console.log(userText, url);
-    const user = {
-      userTasks: userText,
-      img: url,
-    };
-    localStorage.setItem("userData", JSON.stringify(user));
+    // const user = {
+    //   userTasks: userText,
+    //   img: url,
+    // };
+
+    let userTasks = [];
+
+    const user = { userTasks: userText, img: url };
+
+    userTasks.push(user);
+
+    localStorage.setItem("userData", JSON.stringify(userTasks));
     toast.success("data uploaded");
     // clear filed
     setUserText("");
@@ -169,6 +176,7 @@ const Home = () => {
                 type="text"
                 id="userText"
                 name="userText"
+                value={userText}
                 onChange={(e) => setUserText(e.target.value)}
                 placeholder="write your task"
                 className="w-full h-14 rounded-md border-gray-200 bg-offWhite dark:bg-primary px-10 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white sm:text-sm"
