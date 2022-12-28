@@ -3,13 +3,18 @@ import Loading from "../Components/Loading/Loading";
 import { AuthContext } from "../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import Error from "../Components/Error/Error";
+import { async } from "@firebase/util";
+import axios from "axios";
+import { api } from "../api/api";
 
 const Home = () => {
-  const { signIn, loading, setLoading } = useContext(AuthContext);
+  const { user, loading, setLoading } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [image, setImage] = useState("");
   const [userText, setUserText] = useState("");
   const [url, setUrl] = useState("");
+
+  console.log(user);
 
   const uploadImage = (e) => {
     setError("");
@@ -36,12 +41,8 @@ const Home = () => {
       .catch((err) => console.log(err));
   };
 
-  const uploadData = () => {
+  const uploadData = async () => {
     console.log(userText, url);
-    // const user = {
-    //   userTasks: userText,
-    //   img: url,
-    // };
 
     let userTasks = [];
 
@@ -55,37 +56,37 @@ const Home = () => {
     setUserText("");
     setImage("");
     setUrl("");
-    // const data = new FormData();
-    // data.append("file", image);
-    // data.append("upload_preset", "h6imtxf3");
-    // data.append("cloud_name", "dhhybvtwz");
-    // fetch("  https://api.cloudinary.com/v1_1/dhhybvtwz/image/upload", {
-    //   method: "post",
-    //   body: data,
-    // })
-    //   .then((resp) => resp.json())
-    //   .then((data) => {
-    //     setUrl(data.url);
-    //     toast.success("Image uploaded");
-    //     const user = {
-    //       userTasks: userText,
-    //       img: url,
-    //     };
-    //     console.log(user);
-    //     // save data to localStorage
-    //     localStorage.setItem("userData", JSON.stringify(user));
-    //     // clear filed
-    //     // setUserText("");
-    //     // setImage("");
-    //   })
-
-    //   .catch((err) => console.log(err));
+    // call post api
+    !loading && user.email !== null && (await apiHandler());
   };
 
-  // setTimeout(setError("Something wrong"), 5000);
   setTimeout(function () {
     setError("Something wrong");
-  }, "5000");
+  }, "2000");
+
+  // apiHandler
+  const apiHandler = async () => {
+    const formData = {
+      title: userText,
+      image: url,
+    };
+    console.log(formData);
+
+    // save  information to the database
+    // setIsLoading(true);
+    fetch(`${api}/task/${user.email}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        toast.success("data added successfully");
+      });
+  };
 
   return loading === true ? (
     <Loading />
@@ -146,11 +147,9 @@ const Home = () => {
             {image !== "" && (
               <div className="text-start ">
                 {!url && error !== "" && (
-                  <Error msg="something wrong please select another image">
-                    {error}
-                  </Error>
+                  <Error msg="something wrong please select another image"></Error>
                 )}
-                {!url ? (
+                {!url || url === "" ? (
                   <span className="my-2 text-start bg-blackColor  text-primary py-2 px-3 rounded-lg ">
                     uploading
                   </span>
