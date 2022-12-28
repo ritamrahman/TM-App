@@ -3,8 +3,6 @@ import Loading from "../Components/Loading/Loading";
 import { AuthContext } from "../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import Error from "../Components/Error/Error";
-import { async } from "@firebase/util";
-import axios from "axios";
 import { api } from "../api/api";
 
 const Home = () => {
@@ -13,6 +11,13 @@ const Home = () => {
   const [image, setImage] = useState("");
   const [userText, setUserText] = useState("");
   const [url, setUrl] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    !loading && user && setIsLogin(true);
+  }, [user]);
+
+  console.log("isLogin", isLogin);
 
   console.log(user);
 
@@ -52,6 +57,7 @@ const Home = () => {
 
     localStorage.setItem("userData", JSON.stringify(userTasks));
     toast.success("data uploaded");
+
     // clear filed
     setUserText("");
     setImage("");
@@ -74,7 +80,7 @@ const Home = () => {
 
     // save  information to the database
     // setIsLoading(true);
-    fetch(`${api}/task/${user.email}`, {
+    fetch(`${api}/task/${user?.email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
