@@ -11,18 +11,17 @@ const MyTasks = () => {
   const { user, loading } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [allTasks, setAllTasks] = useState([]);
+  const [localStorageTask, setLocalStorageTask] = useState(null);
   const [taskApiCall, setTaskApiCall] = useState(false);
+  const [localStorageCall, setLocalStorageCall] = useState(false);
 
   // get localstorage item
-  // const item = localStorage.getItem("userData");
-  const item = JSON.parse(localStorage.getItem("userData"));
-  console.log("item", item);
+  useEffect(() => {
+    setLocalStorageTask(JSON.parse(localStorage.getItem("userData")));
+    console.log("item", localStorageTask);
+  }, [localStorageCall]);
 
-  if (user?.uid) {
-    console.log("call db");
-  } else {
-    console.log("call local");
-  }
+  console.log("localStorageCall", localStorageCall);
 
   // call all tasks api
   useEffect(() => {
@@ -41,9 +40,18 @@ const MyTasks = () => {
 
   // deleteHandler
   const deleteHandler = async (id) => {
-    const result = await axios.delete(`${api}/task/${id}`);
-    result.success === true && toast.success("Task deleted successfully");
-    setTaskApiCall(true);
+    if (user?.uid) {
+      // call db
+      const result = await axios.delete(`${api}/task/${id}`);
+      result.success === true && toast.success("Task deleted successfully");
+      setTaskApiCall(true);
+      toast.success("Deleted");
+    } else {
+      // call localStorage
+      localStorage.setItem("userData", JSON.stringify(null));
+      setLocalStorageCall(true);
+      toast.success("Deleted");
+    }
   };
 
   console.log(allTasks);
@@ -70,16 +78,16 @@ const MyTasks = () => {
           </div>
         )
       ) : // call localStorage
-      item === null || item === {} ? (
+      localStorageTask === null || localStorageTask === {} ? (
         <NotFound />
       ) : (
         <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
           {
             <Card
-              id={item._id}
-              title={item.title}
-              image={item.image}
-              isCompleted={item.isCompleted}
+              id={localStorageTask._id}
+              title={localStorageTask.title}
+              image={localStorageTask.image}
+              isCompleted={localStorageTask.isCompleted}
               deleteHandler={deleteHandler}
             />
           }
