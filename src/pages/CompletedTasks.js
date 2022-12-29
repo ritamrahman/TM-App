@@ -1,12 +1,101 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { api } from "../api/api";
 import Card from "../Components/Card/Card";
+import { AuthContext } from "../contexts/AuthProvider";
+import Loading from "../Components/Loading/Loading";
+import NotFound from "../Components/Error/NotFound";
 
 const CompletedTasks = () => {
-  return (
-    <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
-      <Card />
-      <Card />
-    </div>
+  const { user, loading } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [allTasks, setAllTasks] = useState([]);
+  const [localStorageTask, setLocalStorageTask] = useState(null);
+  const [taskApiCall, setTaskApiCall] = useState(false);
+  const [localStorageCall, setLocalStorageCall] = useState(false);
+
+  // get localstorage item
+  useEffect(() => {
+    setLocalStorageTask(JSON.parse(localStorage.getItem("userData")));
+    console.log("item", localStorageTask);
+  }, [localStorageCall]);
+
+  console.log("localStorageCall", localStorageCall);
+
+  // call all tasks api
+  useEffect(() => {
+    // setIsLoading(true);
+
+    fetch(`${api}/completetasks/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAllTasks(data);
+        setIsLoading(false);
+      })
+      .catch((er) => console.error(er));
+  }, [user?.email, taskApiCall]);
+
+  console.log(allTasks);
+
+  // deleteHandler
+  const deleteHandler = async (id) => {
+    if (user?.uid) {
+      // call db
+      const result = await axios.delete(`${api}/task/${id}`);
+      result.success === true && toast.success("Task deleted successfully");
+      setTaskApiCall(true);
+      toast.success("Deleted");
+    } else {
+      // call localStorage
+      localStorage.setItem("userData", JSON.stringify(null));
+      setLocalStorageCall(true);
+      toast.success("Deleted");
+    }
+  };
+
+  console.log(allTasks);
+
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <>
+      {user?.uid ? (
+        // call db
+        allTasks?.tasks?.length === 0 || allTasks?.length === 0 ? (
+          <NotFound />
+        ) : (
+          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
+            {allTasks?.tasks.map((task) => (
+              <Card
+                id={task._id}
+                title={task.title}
+                image={task.image}
+                isCompleted={task.isCompleted}
+                deleteHandler={deleteHandler}
+              />
+            ))}
+          </div>
+        )
+      ) : // call localStorage
+      localStorageTask === null ||
+        localStorageTask === {} ||
+        localStorageTask?.isCompleted === false ? (
+        <NotFound />
+      ) : (
+        <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
+          {
+            <Card
+              id={localStorageTask._id}
+              title={localStorageTask.title}
+              image={localStorageTask.image}
+              isCompleted={localStorageTask.isCompleted}
+              deleteHandler={deleteHandler}
+            />
+          }
+        </div>
+      )}
+    </>
   );
 };
 
