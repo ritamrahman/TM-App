@@ -42,13 +42,9 @@ const AddTask = () => {
   const uploadData = async () => {
     console.log(userText, url);
 
-    let userTasks = [];
+    const user = { _id: 1, title: userText, image: url, isCompleted: false };
 
-    const user = { userTasks: userText, img: url };
-
-    userTasks.push(user);
-
-    localStorage.setItem("userData", JSON.stringify(userTasks));
+    localStorage.setItem("userData", JSON.stringify(user));
     toast.success("data uploaded");
     // clear filed
     setUserText("");

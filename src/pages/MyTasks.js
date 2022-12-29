@@ -10,12 +10,23 @@ import NotFound from "../Components/Error/NotFound";
 const MyTasks = () => {
   const { user, loading } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [allTasks, setAllTasks] = useState();
+  const [allTasks, setAllTasks] = useState([]);
   const [taskApiCall, setTaskApiCall] = useState(false);
+
+  // get localstorage item
+  // const item = localStorage.getItem("userData");
+  const item = JSON.parse(localStorage.getItem("userData"));
+  console.log("item", item);
+
+  if (user?.uid) {
+    console.log("call db");
+  } else {
+    console.log("call local");
+  }
 
   // call all tasks api
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
 
     fetch(`${api}/tasks/${user?.email}`)
       .then((res) => res.json())
@@ -35,23 +46,43 @@ const MyTasks = () => {
     setTaskApiCall(true);
   };
 
+  console.log(allTasks);
+
   return isLoading ? (
     <Loading />
   ) : (
     <>
-      {allTasks?.tasks?.length === 0 ? (
+      {user?.uid ? (
+        // call db
+        allTasks?.tasks?.length === 0 || allTasks?.length === 0 ? (
+          <NotFound />
+        ) : (
+          <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
+            {allTasks?.tasks.map((task) => (
+              <Card
+                id={task._id}
+                title={task.title}
+                image={task.image}
+                isCompleted={task.isCompleted}
+                deleteHandler={deleteHandler}
+              />
+            ))}
+          </div>
+        )
+      ) : // call localStorage
+      item === null || item === {} ? (
         <NotFound />
       ) : (
         <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
-          {allTasks?.tasks.map((task) => (
+          {
             <Card
-              id={task._id}
-              title={task.title}
-              image={task.image}
-              isCompleted={task.isCompleted}
+              id={item._id}
+              title={item.title}
+              image={item.image}
+              isCompleted={item.isCompleted}
               deleteHandler={deleteHandler}
             />
-          ))}
+          }
         </div>
       )}
     </>

@@ -49,13 +49,13 @@ const Home = () => {
   const uploadData = async () => {
     console.log(userText, url);
 
-    let userTasks = [];
+    // let userTasks = [];
 
-    const user = { userTasks: userText, img: url };
+    const user = { _id: 1, title: userText, image: url, isCompleted: false };
 
-    userTasks.push(user);
+    // userTasks.push(user);
 
-    localStorage.setItem("userData", JSON.stringify(userTasks));
+    localStorage.setItem("userData", JSON.stringify(user));
     toast.success("data uploaded");
 
     // clear filed
