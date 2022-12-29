@@ -7,15 +7,22 @@ import { api } from "../api/api";
 
 const AddTask = () => {
   const { user, loading, setLoading } = useContext(AuthContext);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [image, setImage] = useState("");
   const [userText, setUserText] = useState("");
   const [url, setUrl] = useState("");
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    !loading && user && setIsLogin(true);
+  }, [user]);
+
+  console.log("isLogin", isLogin);
 
   console.log(user);
 
   const uploadImage = (e) => {
-    setError("");
+    setError(null);
     const i = e.target.files[0];
     setImage(i);
     console.log("image", i);
@@ -42,10 +49,15 @@ const AddTask = () => {
   const uploadData = async () => {
     console.log(userText, url);
 
+    // let userTasks = [];
+
     const user = { _id: 1, title: userText, image: url, isCompleted: false };
+
+    // userTasks.push(user);
 
     localStorage.setItem("userData", JSON.stringify(user));
     toast.success("data uploaded");
+
     // clear filed
     setUserText("");
     setImage("");
@@ -68,7 +80,7 @@ const AddTask = () => {
 
     // save  information to the database
     // setIsLoading(true);
-    fetch(`${api}/task/${user.email}`, {
+    fetch(`${api}/task/${user?.email}`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -96,6 +108,10 @@ const AddTask = () => {
         </div>
         <div className="relative pt-10 ml-auto">
           <div className="lg:w-2/3 text-center mx-auto">
+            <h1 className="text-matBlack-900 dark:text-primary font-bold text-5xl md:text-6xl xl:text-7xl capitalize lg:leading-10">
+              Add Your Daily Tasks Here
+            </h1>
+
             {/* image field */}
             <div className="max-w-xl mx-auto mt-10 mb-6">
               <label className="flex justify-center w-full h-32 px-4 transition border-2 border-gray-300 dark:border-yellowGreen border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
@@ -133,7 +149,7 @@ const AddTask = () => {
             {/* image preview */}
             {image !== "" && (
               <div className="text-start ">
-                {!url && error !== "" && (
+                {!url && error !== null && (
                   <Error msg="something wrong please select another image"></Error>
                 )}
                 {!url || url === "" ? (

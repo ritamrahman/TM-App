@@ -7,7 +7,7 @@ import { api } from "../api/api";
 
 const Home = () => {
   const { user, loading, setLoading } = useContext(AuthContext);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [image, setImage] = useState("");
   const [userText, setUserText] = useState("");
   const [url, setUrl] = useState("");
@@ -22,7 +22,7 @@ const Home = () => {
   console.log(user);
 
   const uploadImage = (e) => {
-    setError("");
+    setError(null);
     const i = e.target.files[0];
     setImage(i);
     console.log("image", i);
@@ -152,7 +152,7 @@ const Home = () => {
             {/* image preview */}
             {image !== "" && (
               <div className="text-start ">
-                {!url && error !== "" && (
+                {!url && error !== null && (
                   <Error msg="something wrong please select another image"></Error>
                 )}
                 {!url || url === "" ? (

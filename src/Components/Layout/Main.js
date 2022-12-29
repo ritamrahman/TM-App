@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
+import Promotion from "../Error/Promotion";
+import Footer from "../Footer/Footer";
 import Loading from "../Loading/Loading";
 import Navbar from "../Navbar/Navbar";
 
 const Main = () => {
   const [theme, setTheme] = useState(null);
-  const { loading } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   useEffect(() => {
     loading && <Loading />;
@@ -37,11 +39,15 @@ const Main = () => {
 
   return (
     <div>
+      {!loading && !user?.uid && (
+        <Promotion msg="Without login you can add only one task" />
+      )}
       <Navbar handleThemeSwitch={handleThemeSwitch} theme={theme} />
       {/* <div className="w-full pt-20 bg-white dark:bg-midnight"> */}
       <div className="bg-primary dark:bg-matBlack-900">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
