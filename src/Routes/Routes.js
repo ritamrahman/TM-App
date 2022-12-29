@@ -9,6 +9,7 @@ import CompletedTasks from "../pages/CompletedTasks";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
 import NotFound from "../Components/Error/NotFound";
+import UpdateTask from "../pages/UpdateTask";
 
 export const routes = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const routes = createBrowserRouter([
       {
         path: "/completed-tasks",
         element: <CompletedTasks />,
+      },
+      {
+        path: "/update-task/:id",
+        element: <UpdateTask />,
       },
       {
         path: "/login",

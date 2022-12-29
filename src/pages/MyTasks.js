@@ -28,7 +28,6 @@ const MyTasks = () => {
   // call all tasks api
   useEffect(() => {
     // setIsLoading(true);
-    setIsLoading(true);
     fetch(`${api}/tasks/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
