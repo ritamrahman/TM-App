@@ -4,7 +4,14 @@ import React from "react";
 import { toast } from "react-hot-toast";
 import { api } from "../../api/api";
 
-const Card = ({ id, title, image, isCompleted, deleteHandler }) => {
+const Card = ({
+  id,
+  title,
+  image,
+  isCompleted,
+  deleteHandler,
+  description,
+}) => {
   return (
     <div
       className="relative block rounded-xl border border-yellowGreen p-8 shadow-xl"
@@ -32,10 +39,7 @@ const Card = ({ id, title, image, isCompleted, deleteHandler }) => {
           {title}
         </h3>
 
-        <p className="mt-2 hidden text-sm sm:block">
-          You can manage phone, email and chat conversations all from a single
-          mailbox.
-        </p>
+        <p className="mt-2 hidden text-sm sm:block">{description}</p>
       </div>
       <div className=" flex justify-end">
         {/* complete */}

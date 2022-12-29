@@ -11,6 +11,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [image, setImage] = useState("");
   const [userText, setUserText] = useState("");
+  const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
@@ -55,7 +56,13 @@ const Home = () => {
 
     // let userTasks = [];
 
-    const user = { _id: 1, title: userText, image: url, isCompleted: false };
+    const user = {
+      _id: 1,
+      title: userText,
+      description: description,
+      image: url,
+      isCompleted: false,
+    };
 
     // userTasks.push(user);
 
@@ -64,6 +71,7 @@ const Home = () => {
 
     // clear filed
     setUserText("");
+    setDescription("");
     setImage("");
     setUrl("");
     navigate("/my-tasks");
@@ -80,6 +88,7 @@ const Home = () => {
     const formData = {
       title: userText,
       image: url,
+      description: description,
     };
     console.log(formData);
 
@@ -210,6 +219,18 @@ const Home = () => {
                 </button>
               </span>
             </div>
+            <label class="text-gray-700" for="name">
+              <textarea
+                class="flex-1 w-full my-3 px-4 py-2 text-base text-primary placeholder-gray-400 bg-primary/5 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                id="description"
+                placeholder="Description (100 words)"
+                onChange={(e) => setDescription(e.target.value)}
+                name="description"
+                rows="4"
+                cols="10"
+                maxlength="100"
+              ></textarea>
+            </label>
           </div>
         </div>
       </div>

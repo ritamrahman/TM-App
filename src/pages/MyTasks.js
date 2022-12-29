@@ -68,10 +68,11 @@ const MyTasks = () => {
           <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
             {allTasks?.tasks.map((task) => (
               <Card
-                id={task._id}
-                title={task.title}
-                image={task.image}
-                isCompleted={task.isCompleted}
+                id={task?._id}
+                title={task?.title}
+                image={task?.image}
+                description={task?.description}
+                isCompleted={task?.isCompleted}
                 deleteHandler={deleteHandler}
               />
             ))}
@@ -84,10 +85,11 @@ const MyTasks = () => {
         <div className="grid grid-col-1 md:grid-cols-2 lg:grid-cols-3 mx-5 py-10 gap-3">
           {
             <Card
-              id={localStorageTask._id}
-              title={localStorageTask.title}
-              image={localStorageTask.image}
-              isCompleted={localStorageTask.isCompleted}
+              id={localStorageTask?._id}
+              title={localStorageTask?.title}
+              image={localStorageTask?.image}
+              description={localStorageTask?.description}
+              isCompleted={localStorageTask?.isCompleted}
               deleteHandler={deleteHandler}
             />
           }
