@@ -8,6 +8,7 @@ import MyTasks from "../pages/MyTasks";
 import CompletedTasks from "../pages/CompletedTasks";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import NotFound from "../Components/Error/NotFound";
 
 export const routes = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ export const routes = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
