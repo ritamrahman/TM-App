@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import Error from "../Components/Error/Error";
 import { api } from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, loading, setLoading } = useContext(AuthContext);
@@ -12,6 +13,7 @@ const Home = () => {
   const [userText, setUserText] = useState("");
   const [url, setUrl] = useState("");
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     !loading && user && setIsLogin(true);
@@ -21,6 +23,7 @@ const Home = () => {
 
   console.log(user);
 
+  // uploadImage
   const uploadImage = (e) => {
     setError(null);
     const i = e.target.files[0];
@@ -46,6 +49,7 @@ const Home = () => {
       .catch((err) => console.log(err));
   };
 
+  // uploadData
   const uploadData = async () => {
     console.log(userText, url);
 
@@ -62,6 +66,7 @@ const Home = () => {
     setUserText("");
     setImage("");
     setUrl("");
+    navigate("/my-tasks");
     // call post api
     !loading && user.email !== null && (await apiHandler());
   };
