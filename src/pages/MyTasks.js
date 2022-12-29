@@ -17,8 +17,10 @@ const MyTasks = () => {
 
   // get localstorage item
   useEffect(() => {
+    setIsLoading(true);
     setLocalStorageTask(JSON.parse(localStorage.getItem("userData")));
     console.log("item", localStorageTask);
+    setIsLoading(false);
   }, [localStorageCall]);
 
   console.log("localStorageCall", localStorageCall);
@@ -26,7 +28,7 @@ const MyTasks = () => {
   // call all tasks api
   useEffect(() => {
     // setIsLoading(true);
-
+    setIsLoading(true);
     fetch(`${api}/tasks/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
@@ -40,16 +42,20 @@ const MyTasks = () => {
 
   // deleteHandler
   const deleteHandler = async (id) => {
+    setIsLoading(true);
     if (user?.uid) {
       // call db
       const result = await axios.delete(`${api}/task/${id}`);
       result.success === true && toast.success("Task deleted successfully");
       setTaskApiCall(true);
       toast.success("Deleted");
+      setIsLoading(false);
     } else {
+      setIsLoading(true);
       // call localStorage
       localStorage.setItem("userData", JSON.stringify(null));
       setLocalStorageCall(true);
+      setIsLoading(false);
       toast.success("Deleted");
     }
   };

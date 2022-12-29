@@ -221,7 +221,7 @@ const Home = () => {
             </div>
             <label class="text-gray-700" for="name">
               <textarea
-                class="flex-1 w-full my-3 px-4 py-2 text-base text-primary placeholder-gray-400 bg-primary/5 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                class="flex-1 w-full my-3 px-4 py-2 text-base dark:text-primary text-blackColor placeholder-gray-400 bg-offWhite dark:bg-primary/5 border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 id="description"
                 placeholder="Description (100 words)"
                 onChange={(e) => setDescription(e.target.value)}

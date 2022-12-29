@@ -14,7 +14,7 @@ const Card = ({
 }) => {
   return (
     <div
-      className="relative block rounded-xl border border-yellowGreen p-8 shadow-xl"
+      className="relative block rounded-xl bg-offWhite dark:bg-primary/5  p-8 shadow-xl"
       href=""
     >
       <div className=" flex justify-end">
