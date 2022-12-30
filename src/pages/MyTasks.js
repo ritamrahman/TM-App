@@ -27,12 +27,24 @@ const MyTasks = () => {
 
   // call all tasks api
   useEffect(() => {
-    // setIsLoading(true);
+    setIsLoading(true);
     fetch(`${api}/tasks/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setAllTasks(data);
-        setIsLoading(false);
+        data && setIsLoading(false);
+      })
+      .catch((er) => console.error(er));
+  }, []);
+
+  // call all tasks api
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(`${api}/tasks/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAllTasks(data);
+        data && setIsLoading(false);
       })
       .catch((er) => console.error(er));
   }, [user?.email, taskApiCall]);
