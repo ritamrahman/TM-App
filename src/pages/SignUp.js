@@ -25,11 +25,11 @@ const SignUp = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        console.log("user", user);
         setError("");
         form.reset();
         handleUpdateUserProfile(name);
-        saveUserInfo(user.displayName, user.email);
+        saveUserInfo(name, email);
         toast.success("Registration successfully");
         setLoading(false);
         user?.uid && navigate(from, { replace: true });
