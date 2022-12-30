@@ -6,15 +6,18 @@ import toast from "react-hot-toast";
 import { GoogleAuthProvider } from "firebase/auth";
 import { api } from "../api/api";
 import axios from "axios";
+import Loading from "../Components/Loading/Loading";
 const SignUp = () => {
   const [error, setError] = useState("");
-  const { createUser, updateUserProfile, setLoading } = useContext(AuthContext);
+  const { createUser, updateUserProfile, loading, setLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
   // handleFormSubmit
   const handleFormSubmit = (event) => {
+    setLoading(true);
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -30,9 +33,13 @@ const SignUp = () => {
         form.reset();
         handleUpdateUserProfile(name);
         saveUserInfo(name, email);
-        toast.success("Registration successfully");
-        setLoading(false);
-        user?.uid && navigate(from, { replace: true });
+        if (user) {
+          toast.success("Registration successfully");
+          setLoading(false);
+          user?.uid && navigate(from, { replace: true });
+        } else {
+          saveUserInfo(name, email);
+        }
       })
       .catch((e) => {
         console.error(e);
@@ -78,7 +85,9 @@ const SignUp = () => {
     await axios.post(`${api}/user/${email}`, { name, email }, config);
   };
 
-  return (
+  return loading === true ? (
+    <Loading />
+  ) : (
     <div className="w-full flex bg-primary dark:bg-matBlack-900">
       <div className="w-full max-w-md m-auto bg-offWhite dark:bg-matBlack-900 rounded-lg shadow-2xl py-10 px-16">
         <h1 className="text-2xl font-medium text-midnight mt-4 mb-12 text-center dark:text-primary">

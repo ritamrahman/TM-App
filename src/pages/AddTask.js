@@ -67,6 +67,7 @@ const Home = () => {
     // userTasks.push(user);
 
     localStorage.setItem("userData", JSON.stringify(user));
+    navigate("/my-tasks");
     toast.success("data uploaded");
 
     // clear filed
@@ -74,7 +75,6 @@ const Home = () => {
     setDescription("");
     setImage("");
     setUrl("");
-    navigate("/my-tasks");
     // call post api
     !loading && user.email !== null && (await apiHandler());
   };
@@ -104,7 +104,8 @@ const Home = () => {
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        toast.success("data added successfully");
+        result && toast.success("data added successfully");
+        result && navigate("/my-tasks");
       });
   };
 
